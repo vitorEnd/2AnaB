@@ -1,0 +1,258 @@
+/* =========================================
+   STYLE.CSS - VERSÃO FINAL (LAYOUT FIEL)
+   ========================================= */
+
+/* === 1. Variáveis e Configurações === */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #000000;
+    --font-main: 'Montserrat', sans-serif;
+    --font-script: 'Great Vibes', cursive;
+    --font-hand: 'Sacramento', cursive;
+    --flower-opacity: 0.85; /* Opacidade alta para aparecer bem */
+    --overlay-opacity: 0;
+    transition: all 0.6s ease;
+}
+
+/* === 2. Temas (Dark e Foto) === */
+
+/* Tema Dark Mode */
+body.dark-mode {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --border-color: #ffffff;
+    --flower-opacity: 0.4; 
+    --overlay-opacity: 0;
+}
+
+/* Tema Foto (Vivicos) */
+body.photo-mode {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --border-color: #ffffff;
+    --flower-opacity: 0; /* Flor some COMPLETAMENTE aqui */
+    --overlay-opacity: 0.65;
+    
+    background-image: url('Galeria/Vivicos.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* === 3. Estrutura Geral === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    overflow-x: hidden; 
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    min-height: 100svh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    transition: background-color 0.6s ease, color 0.6s ease;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Overlay Escuro */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,1);
+    opacity: var(--overlay-opacity);
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+/* === 4. A Flor (CORREÇÃO DE POSICIONAMENTO) === */
+.flower-img {
+    position: fixed;
+    
+    /* CENTRALIZADO NA VERTICAL (Igual ao Layout) */
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* ENTRA NA TELA (Joga ela mais pra dentro) */
+    left: -50px; 
+    
+    /* TAMANHO GRANDE */
+    height: 90vh; 
+    width: auto;
+    
+    opacity: var(--flower-opacity);
+    z-index: -2; /* Fica atrás do texto */
+    pointer-events: none;
+    
+    /* Mágica para sumir o fundo cinza da imagem JPG */
+    mix-blend-mode: multiply;
+    transition: all 0.6s ease;
+}
+
+/* Ajuste da flor no Dark Mode */
+body.dark-mode .flower-img {
+    filter: invert(1) brightness(0.7); 
+    mix-blend-mode: screen; 
+    left: -80px; /* Um pouquinho mais pra fora no escuro fica mais elegante */
+}
+
+/* === 5. Tipografia === */
+header { text-align: center; margin-bottom: 25px; z-index: 10; }
+
+h1 {
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    font-weight: 400;
+    text-transform: lowercase;
+    margin-bottom: -10px;
+}
+
+h2 {
+    font-family: var(--font-script);
+    font-size: 3.8rem;
+    font-weight: 400;
+    margin-top: 5px;
+    line-height: 1.2;
+}
+
+/* === 6. Caixa de Texto === */
+.message-box {
+    border: 1px solid var(--border-color);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    transition: border-color 0.6s ease;
+    
+    /* Garante que o fundo da caixa seja transparente para ver a flor atrás */
+    background: transparent; 
+}
+
+/* Efeito vidro SÓ no modo foto */
+body.photo-mode .message-box {
+    backdrop-filter: blur(2px);
+    border-color: rgba(255,255,255,0.8);
+}
+
+.message-content p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    letter-spacing: 1.2px;
+    font-weight: 300;
+    text-transform: lowercase;
+}
+
+/* === Botão do Pedido === */
+.btn-pedido {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    transition: all 0.4s ease;
+    border-radius: 50px; /* Bordas arredondadas */
+}
+
+.btn-pedido:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color); /* Inverte as cores ao passar o mouse */
+    transform: scale(1.05);
+}
+
+/* Ajuste para quando o fundo for preto (Modo Foto ou Dark) */
+body.photo-mode .btn-pedido,
+body.dark-mode .btn-pedido {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.photo-mode .btn-pedido:hover,
+body.dark-mode .btn-pedido:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* === 7. Rodapé === */
+footer {
+    margin-top: 30px;
+    font-family: var(--font-hand);
+    font-size: 2rem;
+    text-align: left;
+    width: 100%;
+    max-width: 500px;
+    z-index: 10;
+    padding-left: 10px;
+    padding-bottom: 30px;
+}
+
+/* === 8. Botão Coração === */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    z-index: 100;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* === 9. Ajustes para Celular (iPhone) === */
+@media (max-width: 768px) {
+    
+    body.photo-mode {
+        background-attachment: scroll; 
+    }
+
+    /* No celular a flor desce um pouco para não atrapalhar a leitura */
+    .flower-img {
+        height: 50vh;
+        left: -60px;
+        top: auto;        /* Reseta o topo */
+        bottom: -20px;    /* Fixa embaixo */
+        transform: none;  /* Remove a centralização vertical */
+        opacity: 0.6;
+    }
+
+    h1 { font-size: 0.9rem; letter-spacing: 3px; }
+    h2 { font-size: 3rem; }
+
+    .message-box {
+        padding: 30px 20px;
+        width: 95%;
+    }
+
+    footer {
+        font-size: 1.8rem;
+        text-align: center;
+        padding-left: 0;
+    }
+}
